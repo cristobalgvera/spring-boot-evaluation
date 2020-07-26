@@ -1,10 +1,10 @@
-package cl.fullstack.nomasaccidentabilidad;
+package cl.fullstack.springbootproject;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class NoMasAccidentabilidadApplicationTests {
+class SpringBootProjectTests {
 
     @Test
     void contextLoads() {

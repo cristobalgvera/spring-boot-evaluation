@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>cl.fullstack</groupId>
-    <artifactId>no-mas-accidentabilidad</artifactId>
+    <artifactId>spring-boot-project</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>no-mas-accidentabilidad</name>
-    <description>5th module project</description>
+    <name>spring-boot-project</name>
+    <description>5th module project - Fullstack Java course</description>
 
     <properties>
         <java.version>14</java.version>
