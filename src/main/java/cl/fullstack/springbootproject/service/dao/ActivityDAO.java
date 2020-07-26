@@ -1,4 +1,4 @@
-package cl.fullstack.springbootproject.services.dao;
+package cl.fullstack.springbootproject.service.dao;
 
 import cl.fullstack.springbootproject.model.visit.Activity;
 import cl.fullstack.springbootproject.repository.ActivityRepo;
@@ -41,17 +41,20 @@ public class ActivityDAO implements DAO<Activity, Long> {
         Activity dbActivity = getOne(activity.getId())
                 .orElseThrow(() -> new EntityNotFoundException("Not found activity: " + activity.getId()));
 
-        if(activity.isReady() == dbActivity.isReady())
+        if(activity.isReady() != dbActivity.isReady())
             dbActivity.setReady(activity.isReady());
 
-        if (activity.getDescription().equals(dbActivity.getDescription()))
+        if (!activity.getDescription().equals(dbActivity.getDescription()))
             dbActivity.setDescription(activity.getDescription());
 
+        if (activity.getSchedulingDate() != dbActivity.getSchedulingDate())
+            dbActivity.setSchedulingDate(activity.getSchedulingDate());
 
+        activityRepo.save(dbActivity);
     }
 
     @Override
     public void delete(Long id) {
-
+        activityRepo.deleteById(id);
     }
 }

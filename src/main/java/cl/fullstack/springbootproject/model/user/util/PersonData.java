@@ -3,7 +3,7 @@ package cl.fullstack.springbootproject.model.user.util;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Data
 @Embeddable
@@ -16,12 +16,12 @@ public class PersonData {
 
     @Column(length = 15)
     private String phoneNumber;
-    private Date joinDate;
+    private LocalDateTime joinDate;
 
     // Automatic functions
 
     @PrePersist
     protected void autoSetJoinDate() {
-        joinDate = new Date();
+        joinDate = LocalDateTime.now();
     }
 }

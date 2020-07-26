@@ -1,12 +1,12 @@
 package cl.fullstack.springbootproject.model.user;
 
+import cl.fullstack.springbootproject.model.user.util.Credential;
 import cl.fullstack.springbootproject.model.user.util.PersonData;
 import cl.fullstack.springbootproject.model.visit.Visit;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import org.springframework.data.jpa.domain.AbstractPersistable;
-import org.springframework.data.jpa.domain.AbstractPersistable_;
 
 import javax.persistence.*;
 import java.util.ArrayList;

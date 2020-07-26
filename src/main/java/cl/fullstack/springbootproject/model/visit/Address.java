@@ -1,5 +1,6 @@
-package cl.fullstack.springbootproject.model.user;
+package cl.fullstack.springbootproject.model.visit;
 
+import cl.fullstack.springbootproject.model.user.Customer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
@@ -35,4 +36,8 @@ public class Address {
     @JoinColumn(name = "CUSTOMER_ID")
     @JsonIgnore
     private Customer customer;
+
+    @OneToOne(mappedBy = "address", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private Visit visit;
 }

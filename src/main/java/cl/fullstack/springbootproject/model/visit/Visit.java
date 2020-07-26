@@ -5,23 +5,21 @@ import cl.fullstack.springbootproject.model.user.Employee;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
+import org.springframework.data.jpa.domain.AbstractAuditable;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Data
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class Visit {
-    @Id
-    @GeneratedValue(generator = "VISIT_SEQ")
-    private Long id;
+public class Visit extends AbstractAuditable<Employee, Long> {
 
     private boolean ready; // State of visit
-    private Date schedulingDate; // When visit should be done
-    private Date finishDate; // When visit was done
+    private LocalDateTime schedulingDate; // When visit should be done
+    private LocalDateTime finishDate; // When visit was done
 
     // Associations
 
@@ -43,6 +41,11 @@ public class Visit {
     @JsonIgnore
     private Employee employee;
 
+    @OneToOne
+    @JoinColumn(name = "ADDRESS_ID")
+    @JsonIgnore
+    private Address address;
+
     @OneToMany(mappedBy = "visit", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
     private List<Activity> activities;
@@ -56,16 +59,20 @@ public class Visit {
     // Automatic functions
 
     @PreUpdate
-    private void autoUpdateReadyDate() {
+    private void whenUpdate() {
         if (ready) {
-            if (finishDate == null) finishDate = new Date();
+            if (finishDate == null) finishDate = LocalDateTime.now();
         } else {
             finishDate = null;
         }
+        setLastModifiedBy(getEmployee());
+        setLastModifiedDate(LocalDateTime.now());
     }
 
     @PrePersist
-    private void autoSetReadyFalse() {
-        ready = false;
+    private void whenCreate() {
+        setReady(false);
+        setCreatedBy(getEmployee());
+        setCreatedDate(LocalDateTime.now());
     }
 }

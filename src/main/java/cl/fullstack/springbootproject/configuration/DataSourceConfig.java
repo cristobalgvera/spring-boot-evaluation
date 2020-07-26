@@ -10,7 +10,7 @@ import org.springframework.core.env.Environment;
 
 import javax.sql.DataSource;
 
-@Configuration
+//@Configuration
 @PropertySource(value = "classpath:properties/datasource/oracle.properties")
 public class DataSourceConfig {
 

@@ -1,25 +1,23 @@
 package cl.fullstack.springbootproject.model.visit;
 
-import cl.fullstack.springbootproject.model.visit.Visit;
+import cl.fullstack.springbootproject.model.user.Employee;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
+import org.springframework.data.jpa.domain.AbstractAuditable;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class Activity {
-    @Id
-    @GeneratedValue(generator = "ACTIVITY_SEQ")
-    private Long id;
+public class Activity extends AbstractAuditable<Employee, Long> {
 
     private String description; // JTBD
     private boolean ready; // State of activity
-    private Date schedulingDate; // When activity should be done
-    private Date readyDate; // When activity is done
+    private LocalDateTime schedulingDate; // When activity should be done
+    private LocalDateTime readyDate; // When activity is done
 
     // Associations
 
@@ -31,16 +29,20 @@ public class Activity {
     // Automatic functions
 
     @PreUpdate
-    private void autoUpdateReadyDate() {
+    private void whenUpdate() {
         if (ready) {
-            if (readyDate == null) readyDate = new Date();
+            if (readyDate == null) readyDate = LocalDateTime.now();
         } else {
             readyDate = null;
         }
+        setLastModifiedBy(getVisit().getEmployee());
+        setLastModifiedDate(LocalDateTime.now());
     }
 
     @PrePersist
-    private void autoSetReadyFalse() {
-        ready = false;
+    private void whenCreate() {
+        setReady(false);
+        setCreatedBy(getVisit().getEmployee());
+        setCreatedDate(LocalDateTime.now());
     }
 }
