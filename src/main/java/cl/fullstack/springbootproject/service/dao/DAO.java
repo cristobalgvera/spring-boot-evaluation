@@ -10,7 +10,7 @@ public interface DAO<T, S> {
 
     T save(T t);
 
-    void update(T t);
+    void update(T t) throws NoSuchFieldException;
 
     void delete(S id);
 }

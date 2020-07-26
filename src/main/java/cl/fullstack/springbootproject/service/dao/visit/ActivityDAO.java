@@ -1,7 +1,8 @@
-package cl.fullstack.springbootproject.service.dao;
+package cl.fullstack.springbootproject.service.dao.visit;
 
 import cl.fullstack.springbootproject.model.visit.Activity;
 import cl.fullstack.springbootproject.repository.ActivityRepo;
+import cl.fullstack.springbootproject.service.dao.DAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
