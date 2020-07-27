@@ -1,4 +1,4 @@
-package cl.fullstack.springbootproject.service.dao;
+package cl.fullstack.springbootproject.dao;
 
 import java.util.Collection;
 import java.util.Optional;

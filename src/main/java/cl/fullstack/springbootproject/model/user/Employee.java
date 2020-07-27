@@ -37,4 +37,14 @@ public class Employee extends AbstractPersistable<Long> {
         visits.add(visit);
         visit.setEmployee(this);
     }
+
+    @Override
+    public String toString() {
+        return "Employee{" +
+                super.toString() +
+                ", employeeData=" + employeeData.toString() +
+                ", credential=" + credential +
+                ", visits=" + visits +
+                '}';
+    }
 }

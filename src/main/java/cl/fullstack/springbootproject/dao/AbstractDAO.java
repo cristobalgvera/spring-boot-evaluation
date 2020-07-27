@@ -1,9 +1,10 @@
-package cl.fullstack.springbootproject.service.dao;
+package cl.fullstack.springbootproject.dao;
 
 import cl.fullstack.springbootproject.repository.GenericRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 import org.apache.commons.beanutils.PropertyUtils;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import java.io.Serializable;
@@ -14,18 +15,23 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public abstract class AbstractDAO<T extends AbstractPersistable<S>, S extends Serializable> implements DAO<T, S> {
+@Transactional
+public abstract class AbstractDAO<Entity extends AbstractPersistable<ID>, ID extends Serializable,
+        Repository extends GenericRepo<Entity, ID>> implements DAO<Entity, ID> {
 
-    @Autowired
-    private GenericRepo<T, S> genericRepo;
+    protected final Repository genericRepo;
+
+    public AbstractDAO(Repository genericRepo) {
+        this.genericRepo = genericRepo;
+    }
 
     @Override
-    public Optional<T> getOne(S id) {
+    public Optional<Entity> getOne(ID id) {
         return Optional.ofNullable(genericRepo.getOne(id));
     }
 
     @Override
-    public Collection<T> getAll() {
+    public Collection<Entity> getAll() {
         return genericRepo.findAll().stream()
                 .filter(Objects::nonNull)
                 .collect(Collectors.collectingAndThen(Collectors.toList(),
@@ -33,22 +39,22 @@ public abstract class AbstractDAO<T extends AbstractPersistable<S>, S extends Se
     }
 
     @Override
-    public T save(T t) {
-        return genericRepo.save(t);
+    public Entity save(Entity entity) {
+        return genericRepo.save(entity);
     }
 
     @Override
-    public void update(T t) {
-        T dbEntity = getOne(t.getId())
+    public void update(Entity entity) {
+        Entity dbEntity = getOne(entity.getId())
                 .orElseThrow(() -> new EntityNotFoundException("Not found entity " +
-                        t.getClass().getName() + ": " + t.getId()));
+                        entity.getClass().getName() + ": " + entity.getId()));
 
-        Field[] attributes = t.getClass().getDeclaredFields();
+        Field[] attributes = entity.getClass().getDeclaredFields();
 
         for (var attribute : attributes) {
             try {
                 // Dynamically set attribute value
-                PropertyUtils.setSimpleProperty(dbEntity, attribute.getName(), attribute.get(t));
+                PropertyUtils.setSimpleProperty(dbEntity, attribute.getName(), attribute.get(entity));
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -56,7 +62,7 @@ public abstract class AbstractDAO<T extends AbstractPersistable<S>, S extends Se
     }
 
     @Override
-    public void delete(S id) {
+    public void delete(ID id) {
         genericRepo.deleteById(id);
     }
 }

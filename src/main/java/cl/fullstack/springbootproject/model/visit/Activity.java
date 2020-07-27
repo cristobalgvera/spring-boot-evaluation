@@ -45,4 +45,16 @@ public class Activity extends AbstractAuditable<Employee, Long> {
         setCreatedBy(getVisit().getEmployee());
         setCreatedDate(LocalDateTime.now());
     }
+
+    @Override
+    public String toString() {
+        return "Activity{" +
+                super.toString() +
+                ", description='" + description + '\'' +
+                ", ready=" + ready +
+                ", schedulingDate=" + schedulingDate +
+                ", readyDate=" + readyDate +
+                ", visit=" + visit.getId() +
+                '}';
+    }
 }

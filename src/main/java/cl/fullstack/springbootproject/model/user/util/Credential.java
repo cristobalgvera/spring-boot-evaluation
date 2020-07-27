@@ -5,16 +5,16 @@ import cl.fullstack.springbootproject.model.user.Employee;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import javax.persistence.*;
 
 @Data
+@EqualsAndHashCode(exclude = {"employee", "customer"})
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class Credential {
-    @Id
-    @GeneratedValue(generator = "CREDENTIAL_SEQ")
-    private Long id;
+public class Credential extends AbstractPersistable<Long> {
 
     @Column(length = 40, nullable = false, unique = true)
     private String email;
@@ -49,5 +49,21 @@ public class Credential {
         } else {
             roles = "ROLE_ADMIN";
         }
+    }
+
+    @Override
+    public String toString() {
+        Long userId;
+        if (customer != null) userId = customer.getId();
+        else userId = employee.getId();
+
+        return "Credential{" +
+                super.toString() +
+                ", user_id='" + userId + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", roles='" + roles + '\'' +
+                ", active=" + active +
+                '}';
     }
 }

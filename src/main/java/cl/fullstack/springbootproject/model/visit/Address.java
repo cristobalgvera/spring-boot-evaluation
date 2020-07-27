@@ -4,16 +4,14 @@ import cl.fullstack.springbootproject.model.user.Customer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
+import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import javax.persistence.*;
 
 @Data
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class Address {
-    @Id
-    @GeneratedValue(generator = "ADDRESS_SEQ")
-    private Long id;
+public class Address extends AbstractPersistable<Long> {
 
     @Column(length = 25, nullable = false)
     private String country;
@@ -40,4 +38,17 @@ public class Address {
     @OneToOne(mappedBy = "address", cascade = CascadeType.ALL)
     @JsonIgnore
     private Visit visit;
+
+    @Override
+    public String toString() {
+        return "Address{" +
+                super.toString() +
+                ", country='" + country + '\'' +
+                ", city='" + city + '\'' +
+                ", street='" + street + '\'' +
+                ", block='" + block + '\'' +
+                ", addressNumber=" + addressNumber +
+                ", customer=" + customer.getId() +
+                '}';
+    }
 }

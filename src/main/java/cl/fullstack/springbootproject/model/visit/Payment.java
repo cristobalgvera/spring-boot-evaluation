@@ -39,4 +39,15 @@ public class Payment extends AbstractAuditable<Customer, Long> {
         setCreatedBy(getVisit().getCustomer());
         setCreatedDate(LocalDateTime.now());
     }
+
+    @Override
+    public String toString() {
+        return "Payment{" +
+                super.toString() +
+                ", payDay=" + payDay +
+                ", amount=" + amount +
+                ", ready=" + ready +
+                ", visit=" + visit.getId() +
+                '}';
+    }
 }

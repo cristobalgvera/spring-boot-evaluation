@@ -1,10 +1,10 @@
 package cl.fullstack.springbootproject.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.repository.NoRepositoryBean;
 
 import java.io.Serializable;
 
-@Repository
-public interface GenericRepo<T, S extends Serializable> extends JpaRepository<T, S> {
+@NoRepositoryBean
+public interface GenericRepo<Entity, ID extends Serializable> extends JpaRepository<Entity, ID> {
 }

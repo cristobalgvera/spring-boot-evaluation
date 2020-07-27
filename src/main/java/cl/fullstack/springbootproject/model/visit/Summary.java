@@ -38,4 +38,14 @@ public class Summary extends AbstractAuditable<Employee, Long> {
         setCreatedBy(getVisit().getEmployee());
         setCreatedDate(LocalDateTime.now());
     }
+
+    @Override
+    public String toString() {
+        return "Summary{" +
+                super.toString() +
+                ", rating=" + rating +
+                ", description='" + description + '\'' +
+                ", visit=" + visit.getId() +
+                '}';
+    }
 }

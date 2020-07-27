@@ -48,4 +48,15 @@ public class Customer extends AbstractPersistable<Long> {
         visits.add(visit);
         visit.setCustomer(this);
     }
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                super.toString() +
+                ", customerData=" + customerData.toString() +
+                ", credential=" + credential +
+                ", addresses=" + addresses +
+                ", visits=" + visits +
+                '}';
+    }
 }
