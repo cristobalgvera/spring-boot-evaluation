@@ -1,7 +1,6 @@
 package cl.fullstack.springbootproject.dao;
 
 import cl.fullstack.springbootproject.repository.GenericRepo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.springframework.transaction.annotation.Transactional;
