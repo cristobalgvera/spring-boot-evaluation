@@ -1,16 +1,42 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: alumno
-  Date: 03-08-2020
-  Time: 18:02
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" isELIgnored="false" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>Index de prueba</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu:500" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/style.css">
+    <title>Login</title>
 </head>
 <body>
-<h1>prueba</h1>
+
+<div class="logo">
+    <img src="resources/img/logo-A.png" alt="logo">
+</div>
+<div class="login">
+
+    <div class="login-header">
+        <h1>Login Intranet</h1>
+    </div>
+    <div class="login-form">
+
+        <form action="<c:url value="/login"/>" method="POST">
+            <label>Usuario:</label>
+            <input type="text" name="username" placeholder="Usuario"/><br>
+            <label>Clave:</label>
+            <input type="password" name="password" required placeholder="Clave"/>
+            <br>
+            <input type="submit" value="Acceso" required class="login-button"/>
+        </form>
+
+    </div>
+</div>
+<footer>
+    <p> Asesorías digitales <br>
+        Todos los derechos reservados.
+    </p>
+</footer>
 </body>
 </html>
