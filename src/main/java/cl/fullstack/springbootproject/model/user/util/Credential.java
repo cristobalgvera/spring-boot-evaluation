@@ -20,7 +20,7 @@ public class Credential extends AbstractPersistable<Long> {
     private String email;
 
     @Column(length = 120, nullable = false)
-    private String password; // TODO: Encrypt password
+    private String password;
 
     @Column(length = 30)
     private String roles;

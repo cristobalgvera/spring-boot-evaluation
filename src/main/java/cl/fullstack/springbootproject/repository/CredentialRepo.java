@@ -9,4 +9,5 @@ import java.util.Optional;
 public interface CredentialRepo extends GenericRepo<Credential, Long> {
     Optional<Credential> findByCustomer_Id(Long id);
     Optional<Credential> findByEmployee_Id(Long id);
+    Optional<Credential> findByEmail(String email);
 }
