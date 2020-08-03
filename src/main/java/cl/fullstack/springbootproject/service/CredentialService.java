@@ -3,20 +3,36 @@ package cl.fullstack.springbootproject.service;
 import cl.fullstack.springbootproject.dao.user.util.CredentialDAO;
 import cl.fullstack.springbootproject.model.user.util.Credential;
 import cl.fullstack.springbootproject.repository.CredentialRepo;
-import net.bytebuddy.asm.Advice;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 
 @Service
 public class CredentialService extends GenericService<Credential, Long, CredentialRepo, CredentialDAO> {
-    @Autowired
-    private CredentialRepo credentialRepo;
 
     @Autowired
     CredentialService(CredentialDAO credentialDAO) {
         super(credentialDAO);
+    }
+
+    @Autowired
+    private CredentialRepo credentialRepo;
+
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    @Override
+    public Credential save(Credential credential) {
+        credential.setPassword(bCryptPasswordEncoder.encode(credential.getPassword()));
+        return super.save(credential);
+    }
+
+    @Override
+    public void update(Credential credential) {
+        credential.setPassword(bCryptPasswordEncoder.encode(credential.getPassword()));
+        super.update(credential);
     }
 
     public Credential getByCustomerId(Long customerId) {
