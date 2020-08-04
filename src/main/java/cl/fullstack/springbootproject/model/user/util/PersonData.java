@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 @Embeddable
 public class PersonData {
     @Column(length = 20)
-    private String name;
+    private String firstName;
 
     @Column(length = 30)
     private String lastName;

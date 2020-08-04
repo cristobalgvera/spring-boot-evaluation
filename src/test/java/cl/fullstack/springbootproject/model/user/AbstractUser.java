@@ -19,7 +19,7 @@ public abstract class AbstractUser {
     private void setDefaultPersonData() {
         personData = new PersonData();
         {
-            personData.setName(role + "Name");
+            personData.setFirstName(role + "Name");
             personData.setLastName(role + "LastName");
             personData.setJoinDate(LocalDateTime.now());
             personData.setPhoneNumber("+01298765432");

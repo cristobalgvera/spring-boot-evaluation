@@ -16,7 +16,7 @@ import javax.persistence.*;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Credential extends AbstractPersistable<Long> {
 
-    @Column(length = 40, nullable = false, unique = true)
+    @Column(length = 60, nullable = false, unique = true)
     private String email;
 
     @Column(length = 120, nullable = false)

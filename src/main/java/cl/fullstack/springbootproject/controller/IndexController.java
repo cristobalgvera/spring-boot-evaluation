@@ -4,10 +4,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 
-@Controller
+//@Controller
 public class IndexController {
-    @RequestMapping(value ="/login")
-    public String method(){
-        return "security/login";
-    }
+//    @RequestMapping(value ="/login")
+//    public String method(){
+//        return "security/login";
+//    }
 }

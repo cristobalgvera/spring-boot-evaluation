@@ -10,11 +10,30 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <html>
 <head>
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu:500"
+          rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="<c:url value="/css/style.css"/>">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <% int activeTab = (session.getAttribute("activeTab") != null) ? (int) session.getAttribute("activeTab") : 0; %>
+    <script>
+        $(function () {
+            $("#tabs").tabs({
+                active: {active:<%=activeTab%>}
+            });
+        });
+    </script>
+    <script>
+        $(function () {
+            $("#dialog").dialog();
+        });
+    </script>
     <title>Home</title>
 </head>
 <body>
 <div class="saludo">
-    <h2>Hola, ${sessionScope}</h2>
+    <h2>Hola, ${sessionScope.user.employeeData.firstName}</h2>
 </div>
 <div id="tabs">
     <ul>
@@ -38,17 +57,45 @@
                     <td class="sinborde"><c:out value="${visit.schedulingDate}"/></td>
                     <td class="sinborde"><c:out value="${visit.customer.id}"/></td>
                     <td class="sinborde">
-                        <form:form method="post" action="${pageContext.request.contextPath}/" modelAttribute="visit">
-                            <form:hidden path="id"></form:hidden>
-                            <button  type="submit" name="submit-btn" value="details">Detalles</button>
+                        <form method="post" action="<c:url value="/employee"/>">
+                            <input type="hidden" name="id" value="<c:out value="${visit.id}"/>">
+                            <button type="submit" name="submit-btn" value="details">Detalles</button>
                             <button type="submit" name="submit-btn" value="finish">Finalizar</button>
-                        </form:form>
+                        </form>
                     </td>
                 </tr>
             </c:forEach>
             </tbody>
         </table>
     </div>
+    <div id="tabs-2">
+        <h3>Visualización de pagos</h3>
+        <table class="sinborde" align="center">
+            <thead>
+            <tr>
+                <th>Nº de transación del pago</th>
+                <th>Fecha del pago</th>
+                <th>Valor total</th>
+                <th>Estado del pago</th>
+            </tr>
+            </thead>
+            <tbody>
+            <c:forEach var="pay" items="${payments}">
+                <tr>
+                    <td class="sinborde"><c:out value="${pay.id}"/></td>
+                    <td class="sinborde"><c:out value="${pay.payDay}"/></td>
+                    <td class="sinborde"><c:out value="${pay.amount}"/></td>
+                    <td class="sinborde"><c:out value="${pay.ready ? 'Pagado': 'No Pagado'}"/></td>
+                </tr>
+            </c:forEach>
+            </tbody>
+        </table>
+    </div>
 </div>
+<footer>
+    <p>
+        Asesorías digitales <br> Todos los derechos reservados.
+    </p>
+</footer>
 </body>
 </html>

@@ -17,7 +17,8 @@ class EmployeeServiceTest extends AbstractTest {
         createDefaultModel();
 
         dbEmployee = employeeService.save(testEmployee);
-
+        log.message(dbEmployee);
+        dbEmployee = employeeService.getOne(dbEmployee.getId() + 1);
         log.message(dbEmployee);
         isNumeric(dbEmployee.getId());
         log.finish();

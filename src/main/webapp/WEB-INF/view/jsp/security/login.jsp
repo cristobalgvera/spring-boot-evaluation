@@ -21,16 +21,15 @@
         <h1>Login Intranet</h1>
     </div>
     <div class="login-form">
-
-        <form action="<c:url value="/login"/>" method="POST">
-            <label>Usuario:</label>
-            <input type="text" name="username" placeholder="Usuario"/><br>
-            <label>Clave:</label>
-            <input type="password" name="password" required placeholder="Clave"/>
+        <form:form action="${pageContext.request.contextPath}/login" method="POST">
+            <label for="username">Usuario:</label>
+            <input type="text" id="username" name="username" placeholder="Usuario" required/>
             <br>
-            <input type="submit" value="Acceso" required class="login-button"/>
-        </form>
-
+            <label for="password">Clave:</label>
+            <input type="password" id="password" name="password" placeholder="Clave" required/>
+            <br>
+            <button type="submit" class="login-button">Acceso</button>
+        </form:form>
     </div>
 </div>
 <footer>
