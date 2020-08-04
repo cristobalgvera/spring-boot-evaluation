@@ -355,7 +355,7 @@ footer {
     justify-content: space-evenly;
 }
 
-#dialog p c:out {
+#dialog p {
     margin-bottom: 5px;
 }
 

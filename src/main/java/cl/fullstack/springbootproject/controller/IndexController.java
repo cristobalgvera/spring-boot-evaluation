@@ -5,8 +5,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 
 @Controller
-@RequestMapping(value = "/")
 public class IndexController {
+    @RequestMapping(value ="/login")
+    public String method(){
+        return "security/login";
+    }
 }
-
-

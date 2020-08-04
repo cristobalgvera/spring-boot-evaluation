@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css?family=Ubuntu:500" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/style.css">
+    <link rel="stylesheet" href="<c:url value="/css/style.css"/>" type="text/css">
     <title>Login</title>
 </head>
 <body>
