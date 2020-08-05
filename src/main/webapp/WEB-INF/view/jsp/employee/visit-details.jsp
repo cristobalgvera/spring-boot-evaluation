@@ -43,7 +43,7 @@
 <body>
 <div class="logout" align="right">
     <form action="<c:url value="/logout"/>" method="POST">
-        <button id="logout" type="submit">Cerrar sesión</button>
+        <button class="ui-button ui-widget-shadow" id="logout" type="submit">Cerrar sesión</button>
     </form>
 </div>
 <div class="logo">
@@ -54,45 +54,49 @@
     <div class="group">
         <h3>Información general</h3>
         <div>
-            <p><strong>ID:</strong> <c:out value="${visit.id}"/></p>
-            <p><strong>Estado:</strong> <c:out value="${visit.ready ? 'Realizada' : 'No realizada'}"/></p>
+            <p><strong>ID:</strong> ${visit.id}</p>
+            <p><strong>Estado:</strong> ${visit.ready ? 'Realizada' : 'No realizada'}</p>
             <c:choose>
                 <c:when test="${visit.ready}">
-                    <p><strong>Fecha de término:</strong> <c:out value="${visit.finishDate}"/></p>
+                    <p><strong>Fecha de término:</strong> ${visit.finishDate}></p>
                 </c:when>
                 <c:otherwise>
-                    <p><strong>Fecha estimada de término:</strong> <c:out value="${visit.schedulingDate}"/></p>
+                    <p><strong>Fecha estimada de término:</strong> ${visit.schedulingDate}</p>
                 </c:otherwise>
             </c:choose>
-            <p><strong>Fecha de petición:</strong> <c:out value="${visit.createdDate.get()}"/></p>
+            <p><strong>Fecha de petición:</strong> ${visit.createdDate.get()}</p>
             <c:if test="${visit.lastModifiedDate.orElse(null) != null}">
-                <c:set value="${visit.lastModifiedBy.get().personData}" var="personData"></c:set>
-                <p><strong>Fecha última modificación:</strong> <c:out value="${visit.lastModifiedDate.get()}"/></p>
-                <p><strong>Visita modificada por:</strong> <c:out
-                        value="${personData.firstName} ${personData.lastName}"/></p>
+                <c:set value="${visit.lastModifiedBy.get().personData}" var="personData"/>
+                <p><strong>Fecha última modificación:</strong> ${visit.lastModifiedDate.get()}</p>
+                <p><strong>Visita modificada por:</strong> ${personData.firstName} ${personData.lastName}</p>
             </c:if>
         </div>
     </div>
     <div class="group">
         <h3>Actividades</h3>
         <div>
-    <%--    TODO: For each to put visit's activities    --%>
             <table id="activities" class="display">
                 <thead>
                 <tr>
-                    <th>Column 1</th>
-                    <th>Column 2</th>
+                    <th>N°</th>
+                    <th>Descripción</th>
+                    <th>Estado</th>
+                    <th>Fecha límite</th>
+                    <th>Fecha realización</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>Row 1 Data 1</td>
-                    <td>Row 1 Data 2</td>
-                </tr>
-                <tr>
-                    <td>Row 2 Data 1</td>
-                    <td>Row 2 Data 2</td>
-                </tr>
+                <c:forEach items="${activities}" var="activity" varStatus="status">
+                    <tr>
+                        <td>${status.count}</td>
+                        <td>${activity.description}</td>
+                        <td style="background-color: ${activity.ready ? 'lightgreen' : 'lightcoral'}"></td>
+                        <td>${activity.schedulingDate}</td>
+                        <c:if test="${activity.ready}">
+                            <td>${activity.readyDate}</td>
+                        </c:if>
+                    </tr>
+                </c:forEach>
                 </tbody>
             </table>
         </div>
@@ -100,42 +104,41 @@
     <div class="group">
         <h3>Cliente</h3>
         <div>
-            <p>Sed non urna. Donec et ante. Phasellus eu ligula. Vestibulum sit amet purus. Vivamus hendrerit, dolor at
-                aliquet laoreet, mauris turpis porttitor velit, faucibus interdum tellus libero ac justo. Vivamus non
-                quam. In suscipit faucibus urna. </p>
+            <c:set value="${customer.personData}" var="customerData"/>
+            <p><strong>ID:</strong> ${customer.id}</p>
+            <p><strong>Nombre:</strong> ${customerData.firstName} ${customerData.lastName}</p>
+            <p><strong>Número telefónico:</strong> ${customerData.phoneNumber}</p>
         </div>
     </div>
     <div class="group">
         <h3>Dirección</h3>
         <div>
-            <div>
-                <h5>Ciudad: </h5> <c:out value="${address.city}"/>
-            </div>
-            <p>Nam enim risus, molestie et, porta ac, aliquam ac, risus. Quisque lobortis. Phasellus pellentesque purus
-                in massa. Aenean in pede. Phasellus ac libero ac tellus pellentesque semper. Sed ac felis. Sed commodo,
-                magna quis lacinia ornare, quam ante aliquam nisi, eu iaculis leo purus venenatis dui. </p>
-            <ul>
-                <li>List item one</li>
-                <li>List item two</li>
-                <li>List item three</li>
-            </ul>
+            <p><strong>País:</strong> ${address.country}</p>
+            <p><strong>Ciudad:</strong> ${address.city}</p>
+            <p><strong>Calle:</strong> ${address.street}</p>
+            <p><strong>Número:</strong> ${address.addressNumber}</p>
+            <c:if test="${address.block != null}">
+                <p><strong>Bloque:</strong> ${address.block}</p>
+            </c:if>
         </div>
     </div>
     <div class="group">
         <h3>Pagos</h3>
         <div>
-            <p>Cras dictum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis
-                egestas. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aenean
-                lacinia mauris vel est. </p>
-            <p>Suspendisse eu nisl. Nullam ut libero. Integer dignissim consequat lectus. Class aptent taciti sociosqu
-                ad litora torquent per conubia nostra, per inceptos himenaeos. </p>
+            <p><strong>ID:</strong> ${payment.id}</p>
+            <p><strong>Monto:</strong> ${payment.amount}</p>
+            <p><strong>Estado:</strong> ${payment.ready ? 'Pagado' : 'No pagado'}</p>
+            <p><strong>Fecha límite:</strong> ${payment.payDay}</p>
+            <c:if test="${payment.ready}">
+                <p><strong>Fecha de pago:</strong> ${payment.lastModifiedDate.get()}</p>
+            </c:if>
         </div>
     </div>
 </div>
-
-<form class="botonesC" action="<c:url value="/employee/home"/>" method="GET">
-    <button name="submit-btn" value="go-back" type="submit">Volver</button>
-    <button name="submit-btn" value="finish" type="submit">Finalizar</button>
+<br/>
+<form class="botonesC" action="<c:url value="/employee/visit/finish/${visit.id}"/>" method="GET">
+    <button class="ui-button ui-widget-shadow" name="submit-btn" value="go-back" type="submit">Volver</button>
+    <button class="ui-button ui-widget-shadow" name="submit-btn" value="finish" type="submit">Finalizar</button>
 </form>
 <footer>
     <p>

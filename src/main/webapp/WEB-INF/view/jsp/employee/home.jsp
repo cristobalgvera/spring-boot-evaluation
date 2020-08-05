@@ -24,17 +24,27 @@
             });
         });
     </script>
-    <script>
-        $(function () {
-            $("#dialog").dialog();
-        });
-    </script>
+    <style>
+        .actions {
+            display: flex;
+        }
+        .ui-tabs .ui-tabs-nav {
+            background: white;
+            border: none;
+            height: 10%;
+            justify-content: center;
+        }
+        .ui-tabs .ui-tabs-nav {
+            margin: 0;
+            padding: .2em .2em 0;
+        }
+    </style>
     <title>Home</title>
 </head>
 <body>
 <div class="logout" align="right">
     <form action="<c:url value="/logout"/>" method="POST">
-        <button id="logout" type="submit">Cerrar sesión</button>
+        <button class="ui-button ui-widget-shadow" id="logout" type="submit">Cerrar sesión</button>
     </form>
 </div>
 <div class="logo">
@@ -56,6 +66,7 @@
                 <th>ID visita</th>
                 <th>Fecha visita</th>
                 <th>Cliente</th>
+                <th>Acciones</th>
             </tr>
             </thead>
             <tbody>
@@ -64,12 +75,12 @@
                     <td class="sinborde"><c:out value="${visit.id}"></c:out></td>
                     <td class="sinborde"><c:out value="${visit.schedulingDate}"/></td>
                     <td class="sinborde"><c:out value="${visit.customer.id}"/></td>
-                    <td class="sinborde">
-                        <form method="POST" action="<c:url value="/employee/visit/${visit.id}"/>">
-                            <button type="submit">Detalles</button>
+                    <td class="sinborde actions">
+                        <form method="GET" action="<c:url value="/employee/visit/${visit.id}"/>">
+                            <button class="ui-button ui-widget-shadow" type="submit" name="submit-btn" value="details">Detalles</button>
                         </form>
-                        <form method="POST" action="<c:url value="/employee"/>">
-                            <button type="submit" name="submit-btn" value="finish">Finalizar</button>
+                        <form method="GET" action="<c:url value="/employee/visit/finish/${visit.id}"/>">
+                            <button class="ui-button ui-widget-shadow" type="submit" name="submit-btn" value="finish">Finalizar</button>
                         </form>
                     </td>
                 </tr>

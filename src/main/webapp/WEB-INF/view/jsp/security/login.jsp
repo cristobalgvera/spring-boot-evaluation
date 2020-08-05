@@ -7,6 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css?family=Ubuntu:500" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="<c:url value="/css/style.css"/>" type="text/css">
     <title>Login</title>
 </head>
@@ -21,19 +22,21 @@
     </div>
     <div class="login-form">
         <form:form action="${pageContext.request.contextPath}/login" method="POST">
-            <c:if test="${param.error}">
-                <h4 style="color: red">Usuario y contraseña erróneos</h4>
-            </c:if>
-            <c:if test="${param.logout}">
-                <h4 style="color: blue">Te has desconectado</h4>
-            </c:if>
             <label for="username">Usuario:</label>
             <input type="text" id="username" name="username" placeholder="Usuario" required/>
             <br>
             <label for="password">Clave:</label>
             <input type="password" id="password" name="password" placeholder="Clave" required/>
             <br>
-            <button type="submit" class="login-button">Acceso</button>
+            <c:if test="${param.error}">
+                <h4 style="color: red">Usuario y contraseña erróneos</h4>
+                <br>
+            </c:if>
+            <c:if test="${param.logout}">
+                <h4 style="color: blue">Te has desconectado</h4>
+                <br>
+            </c:if>
+            <button type="submit" class="login-button ui-button ui-widget-shadow">Acceso</button>
         </form:form>
     </div>
 </div>

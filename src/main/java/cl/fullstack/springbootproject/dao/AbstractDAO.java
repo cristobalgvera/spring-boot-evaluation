@@ -44,20 +44,21 @@ public abstract class AbstractDAO<Entity extends AbstractPersistable<ID>, ID ext
 
     @Override
     public void update(Entity entity) {
-        Entity dbEntity = getOne(entity.getId())
-                .orElseThrow(() -> new EntityNotFoundException("Not found entity " +
-                        entity.getClass().getName() + ": " + entity.getId()));
-
-        Field[] attributes = entity.getClass().getDeclaredFields();
-
-        for (var attribute : attributes) {
-            try {
-                // Dynamically set attribute value
-                PropertyUtils.setSimpleProperty(dbEntity, attribute.getName(), attribute.get(entity));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
+        genericRepo.save(entity);
+//        Entity dbEntity = getOne(entity.getId())
+//                .orElseThrow(() -> new EntityNotFoundException("Not found entity " +
+//                        entity.getClass().getName() + ": " + entity.getId()));
+//
+//        Field[] attributes = entity.getClass().getDeclaredFields();
+//
+//        for (var attribute : attributes) {
+//            try {
+//                // Dynamically set attribute value
+//                PropertyUtils.setSimpleProperty(dbEntity, attribute.getName(), attribute.get(entity));
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        }
     }
 
     @Override
