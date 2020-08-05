@@ -10,12 +10,12 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class UserCredentialImpl implements UserDetails {
+public class UserDetailsPOJO implements UserDetails {
     private String email, password;
     private boolean active;
     private List<GrantedAuthority> authorities;
 
-    public UserCredentialImpl(Credential credential) {
+    public UserDetailsPOJO(Credential credential) {
         this.email = credential.getEmail();
         this.password = credential.getPassword();
         this.active = credential.isActive();

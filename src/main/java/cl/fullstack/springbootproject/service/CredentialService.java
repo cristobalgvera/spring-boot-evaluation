@@ -35,13 +35,18 @@ public class CredentialService extends GenericService<Credential, Long, Credenti
         super.update(credential);
     }
 
-    public Credential getByCustomerId(Long customerId) {
+    public Credential findByCustomerId(Long customerId) {
         return credentialRepo.findByCustomer_Id(customerId)
                 .orElseThrow(() -> new EntityNotFoundException("Not found customer: " + customerId));
     }
 
-    public Credential getByEmployeeId(Long employeeId) {
+    public Credential findByEmployeeId(Long employeeId) {
         return credentialRepo.findByEmployee_Id(employeeId)
                 .orElseThrow(() -> new EntityNotFoundException("Not found employee: " + employeeId));
+    }
+
+    public Credential findByEmail(String email) {
+        return credentialRepo.findByEmail(email)
+                .orElse(null);
     }
 }

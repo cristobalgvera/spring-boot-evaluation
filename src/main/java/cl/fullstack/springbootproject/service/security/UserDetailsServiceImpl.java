@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class CredentialSecurity implements UserDetailsService {
+public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
     private CredentialRepo credentialRepo;
@@ -20,6 +20,6 @@ public class CredentialSecurity implements UserDetailsService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         Optional<Credential> credential = credentialRepo.findByEmail(email);
         credential.orElseThrow(() -> new UsernameNotFoundException("Not found: " + email));
-        return credential.map(UserCredentialImpl::new).get();
+        return credential.map(UserDetailsPOJO::new).get();
     }
 }

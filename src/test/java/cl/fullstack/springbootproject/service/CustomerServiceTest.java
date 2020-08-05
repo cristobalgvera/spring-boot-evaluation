@@ -1,7 +1,6 @@
 package cl.fullstack.springbootproject.service;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,7 +20,7 @@ public class CustomerServiceTest extends AbstractTest {
         dbCustomer = customerService.save(testCustomer);
         log.message(dbCustomer);
 
-        dbCredential = credentialService.getByCustomerId(dbCustomer.getId());
+        dbCredential = credentialService.findByCustomerId(dbCustomer.getId());
         log.message(dbCredential);
 
         dbAddresses = addressService.entityDAO.getAllByCustomerId(dbCustomer.getId());

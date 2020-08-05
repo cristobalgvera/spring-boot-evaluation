@@ -10,7 +10,7 @@ public class DefaultEmployee extends AbstractUser implements DefaultModel<Employ
         Employee employee = new Employee();
         {
             employee.setCredential(credential);
-            employee.setEmployeeData(personData);
+            employee.setPersonData(personData);
             credential.setEmployee(employee);
         }
         return employee;

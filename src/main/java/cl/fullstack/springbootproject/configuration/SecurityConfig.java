@@ -1,6 +1,6 @@
 package cl.fullstack.springbootproject.configuration;
 
-import cl.fullstack.springbootproject.service.security.CredentialSecurity;
+import cl.fullstack.springbootproject.service.security.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -13,36 +13,48 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private CredentialSecurity credentialSecurity;
+    private UserDetailsServiceImpl userDetailsServiceImpl;
+
+    private String[] resources = new String[]{
+            "/include/**","/css/**","/icons/**","/img/**","/js/**","/layer/**"
+    };
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        super.configure(http);
+        http.authorizeRequests().antMatchers("/h2-console/**").permitAll();
 
-//        http.authorizeRequests().antMatchers("/h2-console/**").permitAll();
-//        http.authorizeRequests().antMatchers("/**").permitAll();
-
-//        http
-//                .authorizeRequests()
-//                    .anyRequest().authenticated()
-//                    .and()
-//                .formLogin()
-//                    .loginPage("/login").permitAll()
-//                    .and()
-//                .logout().permitAll();
+        http
+                .authorizeRequests()
+                .antMatchers(resources).permitAll()
+                .antMatchers("/").permitAll()
+                .antMatchers("/employee/**").hasRole("EMPLOYEE")
+                .antMatchers("/customer/**").hasRole("CUSTOMER")
+                    .anyRequest().authenticated()
+                    .and()
+                .formLogin()
+                    .loginPage("/login").permitAll()
+                    .defaultSuccessUrl("/home", true)
+                    .failureUrl("/login?error=true")
+                    .usernameParameter("username")
+                    .passwordParameter("password")
+                    .and()
+                .logout()
+                    .permitAll()
+                    .invalidateHttpSession(true)
+                    .logoutSuccessUrl("/login?logout=true");
 
         http.csrf().disable();
-        http.headers().frameOptions().disable();
+//        http.headers().frameOptions().disable();
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(credentialSecurity);
+        auth.userDetailsService(userDetailsServiceImpl);
     }
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
-        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder(6);
         return bCryptPasswordEncoder;
     }
 }

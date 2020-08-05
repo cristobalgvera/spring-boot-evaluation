@@ -18,7 +18,7 @@ import java.util.List;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Customer extends AbstractPersistable<Long> {
     @Embedded
-    private PersonData customerData;
+    private PersonData personData;
 
     // Associations
 
@@ -53,7 +53,7 @@ public class Customer extends AbstractPersistable<Long> {
     public String toString() {
         return "Customer{" +
                 super.toString() +
-                ", customerData=" + customerData.toString() +
+                ", customerData=" + personData.toString() +
                 ", credential=" + credential +
                 ", addresses=" + addresses +
                 ", visits=" + visits +

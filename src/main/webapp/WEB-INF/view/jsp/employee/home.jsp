@@ -16,11 +16,11 @@
     <link rel="stylesheet" href="<c:url value="/css/style.css"/>">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <% int activeTab = (session.getAttribute("activeTab") != null) ? (int) session.getAttribute("activeTab") : 0; %>
+    <% int activeTab = (request.getAttribute("activeTab") != null) ? (int) request.getAttribute("activeTab") : 0; %>
     <script>
         $(function () {
             $("#tabs").tabs({
-                active: {active:<%=activeTab%>}
+                active:<%=activeTab%>
             });
         });
     </script>
@@ -32,8 +32,16 @@
     <title>Home</title>
 </head>
 <body>
+<div class="logout" align="right">
+    <form action="<c:url value="/logout"/>" method="POST">
+        <button id="logout" type="submit">Cerrar sesión</button>
+    </form>
+</div>
+<div class="logo">
+    <img src="<c:url value="/img/logo-A.png"/> " alt="logo">
+</div>
 <div class="saludo">
-    <h2>Hola, ${sessionScope.user.employeeData.firstName}</h2>
+    <h2>Hola, ${sessionScope.user.personData.firstName}</h2>
 </div>
 <div id="tabs">
     <ul>
@@ -57,9 +65,10 @@
                     <td class="sinborde"><c:out value="${visit.schedulingDate}"/></td>
                     <td class="sinborde"><c:out value="${visit.customer.id}"/></td>
                     <td class="sinborde">
-                        <form method="post" action="<c:url value="/employee"/>">
-                            <input type="hidden" name="id" value="<c:out value="${visit.id}"/>">
-                            <button type="submit" name="submit-btn" value="details">Detalles</button>
+                        <form method="POST" action="<c:url value="/employee/visit/${visit.id}"/>">
+                            <button type="submit">Detalles</button>
+                        </form>
+                        <form method="POST" action="<c:url value="/employee"/>">
                             <button type="submit" name="submit-btn" value="finish">Finalizar</button>
                         </form>
                     </td>

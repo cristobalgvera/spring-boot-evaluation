@@ -9,7 +9,7 @@ public class DefaultCustomer extends AbstractUser implements DefaultModel<Custom
 
         Customer customer = new Customer();
         {
-            customer.setCustomerData(personData);
+            customer.setPersonData(personData);
             customer.setCredential(credential);
             credential.setCustomer(customer);
         }
